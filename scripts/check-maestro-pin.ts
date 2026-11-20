@@ -39,10 +39,7 @@ function readPin(): Pin {
 		isRecord(manifest) && isRecord(manifest.dependencies)
 			? manifest.dependencies["@nubl/maestro"]
 			: undefined;
-	assert.ok(
-		isString(declared) && /^\d+\.\d+\.\d+$/.test(declared),
-		"package.json must depend on one exact @nubl/maestro version",
-	);
+	assert.equal(declared, "file:vendor/maestro-0.1.2-9de7437.tgz");
 	const packageJson = createRequire(import.meta.url).resolve(
 		"@nubl/maestro/package.json",
 	);
@@ -55,7 +52,7 @@ function readPin(): Pin {
 		});
 	}
 	assert.ok(
-		isRecord(installed) && installed.version === declared,
+		isRecord(installed) && installed.version === "0.1.2",
 		`The installed @nubl/maestro is not the declared ${declared}`,
 	);
 	let pin;

@@ -156,10 +156,9 @@ describe("pack-neutral package contents", () => {
 		// dependency, and the package keeps only the terminal host. Follow
 		// relative imports and URL-built module paths (the legacy child
 		// forwarder) from the declared extension entry.
-		assert.match(
-			manifest.dependencies?.["@nubl/maestro"] ?? "",
-			/^\d+\.\d+\.\d+$/,
-		);
+		const engine = "vendor/maestro-0.1.2-9de7437.tgz";
+		assert.equal(manifest.dependencies?.["@nubl/maestro"], `file:${engine}`);
+		assert.ok(packageFiles.has(engine), "missing pinned Maestro package");
 		const loaded = new Set();
 		const visit = (path) => {
 			if (loaded.has(path)) return;
